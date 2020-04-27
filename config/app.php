@@ -178,6 +178,8 @@ return [
         
         //Laravel Collective
         Collective\Html\HtmlServiceProvider::class,
+        //laravel passport - laravel
+        Caffeinated\Shinobi\ShinobiServiceprovider::class
 
     ],
 
