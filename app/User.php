@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+//conexion con roles y permisos
+use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    //aplicar correctamento los roles y permisos
+    use Notifiable, HasRolesAndPermissions;
     /**
      * The attributes that are mass assignable.
      *
