@@ -58,16 +58,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('products/create', 'ProductController@create')->name('products.create')
     ->middleware('can:products.create');
     
-    Route::put('products/{role}', 'ProductController@update')->name('products.update')
+    Route::put('products/{product}', 'ProductController@update')->name('products.update')
     ->middleware('can:products.edit');
     
-    Route::get('products/{role}', 'ProductController@show')->name('products.show')
+    Route::get('products/{product}', 'ProductController@show')->name('products.show')
     ->middleware('can:products.show');
     
-    Route::delete('products/{role}', 'ProductController@destroy')->name('products.destroy')
+    Route::delete('products/{product}', 'ProductController@destroy')->name('products.destroy')
     ->middleware('can:products.destroy');
     
-    Route::get('products/{role}/edit', 'ProductController@edit')->name('products.edit')
+    Route::get('products/{product}/edit', 'ProductController@edit')->name('products.edit')
     ->middleware('can:products.edit');   
       
     //users

@@ -95,6 +95,6 @@ class ProductController extends Controller
     {
         //
         $product->delete();
-        return back()->with('info', 'Eliminado correctamente')
+        return back()->with('info', 'Eliminado correctamente');
     }
 }
