@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         //asi deberia dar pero no se pudo 
         //$this->call(ProductsTableSeeder::class);
-        //entonces coloque el factory directamente en databaseSeeder;
+        //entonces coloque el factory directamente en databaseSeeder; 
         factory(App\Product::class, 80)->create();
     }
 }
