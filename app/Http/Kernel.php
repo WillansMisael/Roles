@@ -65,6 +65,6 @@ class Kernel extends HttpKernel
         
         //rutas de shinobi para middleware  
         'role' => \Caffeinated\Shinobi\Middleware\UserHasRole::class,
-        'permission' => \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
+        //'permission' => \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
     ];
 }
