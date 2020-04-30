@@ -10,6 +10,19 @@ use Caffeinated\Shinobi\Models\Permission;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        //crear
+        $this->middleware('can:roles.create')->only(['create','store']);
+        //ver el listado
+        $this->middleware('can:roles.index')->only(['index']);;
+        //editar
+        $this->middleware('can:roles.edit')->only(['edit','update']);;
+        //mostrar
+        $this->middleware('can:roles.show')->only(['show']);;
+        //eliminar    
+        $this->middleware('can:roles.destroy')->only(['destroy']);;     
+    }
     /**
      * Display a listing of the resource.
      *
