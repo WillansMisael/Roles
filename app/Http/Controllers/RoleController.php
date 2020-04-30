@@ -30,7 +30,9 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('roles.create');
+        $permissions = Permission::get();
+
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -42,9 +44,12 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
-        $role = role::create($request->all());
+        $role = Role::create($request->all());
+
+        $role->permissions()->sync($request->get('permissions'));
+
         return redirect()->route('roles.edit',$role->id)
-        ->with('info', 'roleo guardado con exito');
+        ->with('info', 'Rol guardado con exito');
     }
 
     /**
@@ -53,7 +58,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(role $role)
+    public function show(Role $role)
     {
         return view('roles.show', compact('role'));
         
@@ -65,11 +70,11 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(role $role)
+    public function edit(Role $role)
     {
         //traemos los roles
-        $roles = Role::get();
-        return view('roles.edit', compact('role','roles'));
+        $permissions = Permission::get();
+        return view('roles.edit', compact('role','permissions'));
 
     }
 
@@ -80,19 +85,19 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, role $role)
+    public function update(Request $request, Role $role)
     {
-        //primero actualizar el usuario
+        //primero actualizar el role
         //luego actualizar los roles        
 
-        //actualiza el usuario
+        //actualiza el role
         $role->update($request->all());
 
-        //actualizar roles
-        $role->roles()->sync($request->get('roles'));
+        //actualizar permiso
+        $role->permissions()->sync($request->get('permissions'));
 
         return redirect()->route('roles.edit',$role->id)
-        ->with('info', 'Usuario actualizado con exito');
+        ->with('info', 'Rol  actualizado con exito');
         
 
 
@@ -104,7 +109,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(role $role)
+    public function destroy(Role $role)
     {
         //
         $role->delete();
