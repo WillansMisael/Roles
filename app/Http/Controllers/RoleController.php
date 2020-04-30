@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//traer de shinobi
+use Caffeinated\Shinobi\Models\Role;
+use Caffeinated\Shinobi\Models\Permission;
+
 
 class RoleController extends Controller
 {
@@ -14,6 +18,8 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $roles = Role::paginate(5);
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -24,6 +30,7 @@ class RoleController extends Controller
     public function create()
     {
         //
+        return view('roles.create');
     }
 
     /**
@@ -35,50 +42,72 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        $role = role::create($request->all());
+        return redirect()->route('roles.edit',$role->id)
+        ->with('info', 'roleo guardado con exito');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(role $role)
     {
-        //
+        return view('roles.show', compact('role'));
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(role $role)
     {
-        //
+        //traemos los roles
+        $roles = Role::get();
+        return view('roles.edit', compact('role','roles'));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, role $role)
     {
-        //
+        //primero actualizar el usuario
+        //luego actualizar los roles        
+
+        //actualiza el usuario
+        $role->update($request->all());
+
+        //actualizar roles
+        $role->roles()->sync($request->get('roles'));
+
+        return redirect()->route('roles.edit',$role->id)
+        ->with('info', 'Usuario actualizado con exito');
+        
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(role $role)
     {
         //
+        $role->delete();
+        return back()->with('info', 'Eliminado correctamente');
     }
 }
